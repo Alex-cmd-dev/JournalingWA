@@ -14,6 +14,7 @@ import {
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Checkbox } from "@/components/ui/checkbox";
+import api from "@/api";
 
 export default function Register() {
   const [firstName, setFirstName] = useState("");
@@ -22,8 +23,10 @@ export default function Register() {
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
   const navigate = useNavigate();
+  const [loading, setLoading] = useState(false);
+  const route = "/api/user/register/";
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
 
     if (password !== confirmPassword) {
@@ -31,9 +34,14 @@ export default function Register() {
       return;
     }
 
-    // Mock registration - in a real app, you would call an API
-    localStorage.setItem("token", "mock-jwt-token");
-    navigate("/");
+    try {
+      const res = await api.post(route, { username, password });
+      navigate("/login");
+    } catch (error) {
+      alert(error);
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (

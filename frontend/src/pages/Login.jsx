@@ -1,5 +1,4 @@
 "use client";
-
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
@@ -13,7 +12,7 @@ import {
 } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { Checkbox } from "@/components/ui/checkbox";
+import { Loader2 } from "lucide-react";
 import api from "@/api";
 import { ACCESS_TOKEN, REFRESH_TOKEN } from "@/constants";
 
@@ -22,6 +21,8 @@ export default function Login() {
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
   const navigate = useNavigate();
+  const route = "/api/token/";
+  const [loading, setLoading] = useState(false);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -32,18 +33,22 @@ export default function Login() {
       return;
     }
 
+    setLoading(true);
     try {
-      const res = await api.post({ email, password }); {
+      const res = await api.post(route, { email, password });
+      {
         localStorage.setItem(ACCESS_TOKEN, res.data.access);
         localStorage.setItem(REFRESH_TOKEN, res.data.refresh);
         navigate("/");
-      } 
+      }
     } catch (err) {
       const errorMessage =
         err.response?.data?.detail ||
         err.response?.data?.message ||
         "An error occurred. Please try again.";
       setError(errorMessage);
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -64,6 +69,9 @@ export default function Login() {
         <CardContent className="space-y-4">
           <form onSubmit={handleSubmit}>
             <div className="space-y-4">
+              {error && (
+                <div className="text-red-500 text-sm text-center">{error}</div>
+              )}
               <div className="space-y-2">
                 <Label htmlFor="email">Email</Label>
                 <Input
@@ -73,6 +81,7 @@ export default function Login() {
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
                   required
+                  disabled={loading}
                 />
               </div>
               <div className="space-y-2">
@@ -91,10 +100,18 @@ export default function Login() {
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
                   required
+                  disabled={loading}
                 />
               </div>
-              <Button type="submit" className="w-full">
-                Sign in
+              <Button type="submit" className="w-full" disabled={loading}>
+                {loading ? (
+                  <>
+                    <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                    Signing in...
+                  </>
+                ) : (
+                  "Sign in"
+                )}
               </Button>
             </div>
           </form>
