@@ -1,3 +1,5 @@
+"use client";
+
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
@@ -67,7 +69,7 @@ export default function Register() {
             Create an account
           </CardTitle>
           <CardDescription className="text-center">
-            Start your journaling journey today
+            Start your journaling journey with AI-powered insights
           </CardDescription>
         </CardHeader>
         <CardContent className="space-y-4">
