@@ -4,7 +4,7 @@ from rest_framework import generics
 from .serializers import UserSerializer, JournalEntrySerializer
 from rest_framework.permissions import IsAuthenticated, AllowAny
 from .models import JournalEntry
-from journaling import analyze_mood
+from journaling import analyze_mood, analyze_content
 # Create your views here.
 
 
@@ -25,7 +25,8 @@ class JournalEntryListCreate(generics.ListCreateAPIView):
         content = self.request.data.get("content", "")
         mood = analyze_mood(content)
         analysis = analyze_content(content, mood)
-        serializer.save(user=self.request.user)
+        serializer.save(user=self.request.user,mood=mood, analysis=analysis)
+        
 
 
 

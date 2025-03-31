@@ -5,7 +5,11 @@ class JournalEntrySerializer(serializers.ModelSerializer):
     class Meta:
         model = JournalEntry
         fields = ["id", "user", "content", "title", "mood","analysis", "created_at"]
-        read_only_fields = ["id", "user", "created_at"]
+        read_only_fields = ["id", "user", "created_at", "mood", "analysis"]
+        extra_kwargs = {
+            "content": {"required": True},
+            "title": {"required": True},
+        }
 
 class UserSerializer(serializers.ModelSerializer):
     class Meta:
