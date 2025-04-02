@@ -5,6 +5,9 @@ from .serializers import UserSerializer, JournalEntrySerializer
 from rest_framework.permissions import IsAuthenticated, AllowAny
 from .models import JournalEntry
 from journaling import analyze_mood, analyze_content
+from rest_framework.views import APIView
+from rest_framework.response import Response
+from django.shortcuts import get_object_or_404
 # Create your views here.
 
 
@@ -37,3 +40,11 @@ class JournalEntryDelete(generics.DestroyAPIView):
     def get_queryset(self):
         user = self.request.user
         return JournalEntry.objects.filter(user=user)
+
+
+class SHow(APIView):
+    def get(self, request, topic_id):
+        topic = get_object_or_404(Topic, id=topic_id, user=self.request.user)
+        flashcards = Flashcard.objects.filter(topic=topic)
+        serializer = FlashcardSerializer(flashcards, many=True)
+        return Response(serializer.data)
