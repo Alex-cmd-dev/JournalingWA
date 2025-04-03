@@ -10,3 +10,5 @@ psycopg2-binary
 python-dotenv
 transformers
 google-genai
+channels==3.0.5
+channels_redis
