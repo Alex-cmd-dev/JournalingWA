@@ -1,4 +1,5 @@
 import json
+import os
 from channels.generic.websocket import AsyncWebsocketConsumer
 from channels.layers import get_channel_layer
 from asgiref.sync import async_to_sync
@@ -8,6 +9,15 @@ from rest_framework.request import Request
 from .models import ChatMessage
 from .serializers import ChatMessageSerializer
 from asgiref.sync import async_to_sync
+from google import genai
+from dotenv import load_dotenv
+
+load_dotenv()
+# Load environment variables
+client = genai.Client(api_key=os.getenv("API_KEY"))
+
+
+
 
 
 class ChatConsumer(AsyncWebsocketConsumer):
@@ -34,3 +44,17 @@ class ChatConsumer(AsyncWebsocketConsumer):
             self.chatID,
             self.channel_name,
         )
+    async def receive(self, text_data):
+        text_data_json = json.loads(text_data)
+        message = text_data_json["message"]
+        # Save message to database
+        chat_message = ChatMessage.objects.create(
+            chatID=self.chatID,
+            user=self.user,
+            message=message
+        )
+        gemini_response = await self.call_gemini_api(message)
+    
+    async def call_gemini_api(self, message):
+        pass
+    
