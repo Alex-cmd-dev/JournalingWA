@@ -59,7 +59,6 @@ INSTALLED_APPS = [
     'api',
     'rest_framework',
     'corsheaders',
-    'channels',
 ]
 
 MIDDLEWARE = [
@@ -150,16 +149,4 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 CORS_ALLOW_ALL_ORIGINS = True
 CORS_ALLOWS_CREDENTIALS = True
 
-# Channels settings
-ASGI_APPLICATION = 'backend.asgi.application'
 
-CHANNEL_LAYERS = {
-    'default': {
-        'BACKEND': 'channels_redis.core.RedisChannelLayer',
-        'CONFIG': {
-            "hosts": [("127.0.0.1", 6379)],
-        },
-    },
-
-}
-#system that allows different instances of your application to communicate with each other

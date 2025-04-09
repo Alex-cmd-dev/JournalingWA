@@ -1,6 +1,6 @@
 from django.contrib.auth.models import User
 from rest_framework import serializers
-from .models import JournalEntry, ChatMessage
+from .models import JournalEntry
 
 
 class UserSerializer(serializers.ModelSerializer):
@@ -24,26 +24,3 @@ class JournalEntrySerializer(serializers.ModelSerializer):
             "content": {"required": True},
             "title": {"required": True},
         }
-
-
-class ChatMessageSerializer(serializers.ModelSerializer):
-    username = serializers.CharField(source="user.username", read_only=True)
-    class Meta:
-        model = ChatMessage
-        fields = [
-            "id",
-            "username",
-            "content",
-            "response",
-            "timestamp",
-            "is_processed",
-            "processing_time",
-            "conversation_id",
-            "metadata",
-        ]
-        read_only_fields = ["id", "timestamp", "is_processed", "processing_time"]
-
-        def create(self, validated_data):
-            return super().create(validated_data)
-        
-
