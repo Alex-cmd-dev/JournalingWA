@@ -73,7 +73,7 @@ export default function Login() {
                 <div className="text-red-500 text-sm text-center">{error}</div>
               )}
               <div className="space-y-2">
-                <Label htmlFor="username">username</Label>
+                <Label htmlFor="username">Username</Label>
                 <Input
                   id="username"
                   type="username"

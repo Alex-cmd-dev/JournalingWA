@@ -19,6 +19,7 @@ import api from "@/api";
 export default function Register() {
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
+  const [email, setEmail] = useState("");
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
@@ -31,6 +32,11 @@ export default function Register() {
     e.preventDefault();
     setError("");
 
+    if (password.length < 8) {
+      setError("Password must be at least 8 characters long");
+      return;
+    }
+
     if (password !== confirmPassword) {
       setError("Passwords don't match");
       return;
@@ -41,6 +47,7 @@ export default function Register() {
       const res = await api.post(route, {
         first_name: firstName,
         last_name: lastName,
+        email,
         username,
         password,
       });
@@ -101,6 +108,18 @@ export default function Register() {
                     disabled={loading}
                   />
                 </div>
+              </div>
+              <div className="space-y-2">
+                <Label htmlFor="username">Email</Label>
+                <Input
+                  id="email"
+                  type="email"
+                  placeholder="your_email@gmail.com"
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
+                  required
+                  disabled={loading}
+                />
               </div>
               <div className="space-y-2">
                 <Label htmlFor="username">Username</Label>
