@@ -74,27 +74,6 @@ export default function Home() {
             </Link>
           </CardFooter>
         </Card>
-
-        <Card>
-          <CardHeader>
-            <MessageSquare
-              className="h-8 w-8 mb-2"
-              style={{ color: "var(--color-primary)" }}
-            />
-            <CardTitle>AI Counselor</CardTitle>
-            <CardDescription>
-              Get personalized insights and guidance from your AI counselor
-            </CardDescription>
-          </CardHeader>
-          <CardFooter>
-            <Link to="/counselor" className="w-full">
-              <Button className="w-full" variant="outline">
-                Chat Now <ArrowRight className="ml-2 h-4 w-4" />
-              </Button>
-            </Link>
-          </CardFooter>
-        </Card>
-
         <Card>
           <CardHeader>
             <BookOpen

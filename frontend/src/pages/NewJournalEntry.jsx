@@ -1,45 +1,39 @@
-"use client"
+"use client";
 
-import { useState } from "react"
-import { Link, useNavigate } from "react-router-dom"
-import { Button } from "@/components/ui/button"
-import { Card } from "@/components/ui/card"
-import { Input } from "@/components/ui/input"
-import { Label } from "@/components/ui/label"
-import { Textarea } from "@/components/ui/textarea"
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
-import { ArrowLeft, Save } from "lucide-react"
+import { useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
+import { Button } from "@/components/ui/button";
+import { Card } from "@/components/ui/card";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+import { Textarea } from "@/components/ui/textarea";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
+import { ArrowLeft, Save } from "lucide-react";
 
-const MOOD_OPTIONS = [
-  "Happy",
-  "Sad",
-  "Anxious",
-  "Calm",
-  "Frustrated",
-  "Grateful",
-  "Reflective",
-  "Excited",
-  "Tired",
-  "Contemplative",
-]
+
 
 export default function NewJournalEntry() {
-  const [title, setTitle] = useState("")
-  const [content, setContent] = useState("")
-  const [mood, setMood] = useState("")
-  const navigate = useNavigate()
+  const [title, setTitle] = useState("");
+  const [content, setContent] = useState("");
+  const navigate = useNavigate();
 
   const handleSubmit = (e) => {
-    e.preventDefault()
+    e.preventDefault();
 
     if (!title || !content) {
-      alert("Please fill in all required fields")
-      return
+      alert("Please fill in all required fields");
+      return;
     }
 
     // In a real app, you would call an API to save the entry
-    navigate("/journal")
-  }
+    navigate("/journal");
+  };
 
   return (
     <div className="max-w-3xl mx-auto px-4 py-8">
@@ -70,22 +64,6 @@ export default function NewJournalEntry() {
             </div>
 
             <div>
-              <Label htmlFor="mood">How are you feeling?</Label>
-              <Select value={mood} onValueChange={setMood}>
-                <SelectTrigger className="mt-1">
-                  <SelectValue placeholder="Select your mood" />
-                </SelectTrigger>
-                <SelectContent>
-                  {MOOD_OPTIONS.map((option) => (
-                    <SelectItem key={option} value={option}>
-                      {option}
-                    </SelectItem>
-                  ))}
-                </SelectContent>
-              </Select>
-            </div>
-
-            <div>
               <Label htmlFor="content">Journal Entry</Label>
               <Textarea
                 id="content"
@@ -107,6 +85,5 @@ export default function NewJournalEntry() {
         </form>
       </Card>
     </div>
-  )
+  );
 }
-

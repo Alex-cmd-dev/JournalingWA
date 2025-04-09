@@ -103,11 +103,11 @@ export default function Register() {
                 </div>
               </div>
               <div className="space-y-2">
-                <Label htmlFor="username">username</Label>
+                <Label htmlFor="username">Username</Label>
                 <Input
                   id="username"
                   type="username"
-                  placeholder="your.username@example.com"
+                  placeholder="your_username"
                   value={username}
                   onChange={(e) => setUsername(e.target.value)}
                   required
