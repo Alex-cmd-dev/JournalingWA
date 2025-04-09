@@ -42,10 +42,11 @@ def analyze_content(text, mood):
             response = client.models.generate_content(
                 model="gemini-2.0-flash", contents=prompt
             )
+            return response.text
         except Exception as api_error:
             raise ValueError(f"Gemini API call failed: {api_error}")
 
-        return response.text
+        
 
     except Exception as e:
         raise ValueError(f"Failed to analyze entry: {str(e)}")
