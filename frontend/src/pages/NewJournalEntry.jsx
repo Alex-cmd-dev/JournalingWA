@@ -15,21 +15,28 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { ArrowLeft, Save } from "lucide-react";
-
-
+import api from "@/api";
 
 export default function NewJournalEntry() {
   const [title, setTitle] = useState("");
   const [content, setContent] = useState("");
   const navigate = useNavigate();
 
-  const handleSubmit = (e) => {
+  const createEntry = (e) => {
     e.preventDefault();
 
     if (!title || !content) {
       alert("Please fill in all required fields");
       return;
     }
+
+    api
+      .post("/api/journalentry/", { content, title })
+      .then((res) => {
+        if (res.status === 201) alert("Entry created!");
+        else alert("Failed to make entry.");
+      })
+      .catch((err) => alert(err));
 
     // In a real app, you would call an API to save the entry
     navigate("/journal");
@@ -49,7 +56,7 @@ export default function NewJournalEntry() {
       <h1 className="text-3xl font-bold mb-6">New Journal Entry</h1>
 
       <Card className="p-6">
-        <form onSubmit={handleSubmit}>
+        <form onSubmit={createEntry}>
           <div className="space-y-6">
             <div>
               <Label htmlFor="title">Title</Label>
