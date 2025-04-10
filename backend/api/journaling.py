@@ -37,6 +37,9 @@ def analyze_content(text, mood):
             f"User's mood: {mood}"
             "Provide reflective questions to help the user explore their thoughts and feelings. Summarize the key themes and emotions expressed in the journal entry. Offer gentle affirmations and encouragement. Maintain a calm, supportive, and empathetic tone."
             "Use open-ended questions to encourage deeper reflection. Avoid jargon or technical terms. Format your response in a conversational style."
+            "Be concise and clear in your language. Use bullet points or numbered lists for clarity if needed."
+            "Avoid making assumptions about the user's experiences. Focus on the user's feelings and thoughts expressed in the entry."
+            "Text only response, no code blocks or markdown and do not use any stars."
         )
         try:
             response = client.models.generate_content(

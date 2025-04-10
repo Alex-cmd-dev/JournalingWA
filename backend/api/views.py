@@ -14,9 +14,6 @@ class CreateUserView(generics.CreateAPIView):
     serializer_class = UserSerializer
     permission_classes = [AllowAny]
 
-
-
-
 class JournalEntryListCreate(generics.ListCreateAPIView):
     serializer_class = JournalEntrySerializer
     permission_classes = [IsAuthenticated]
@@ -55,3 +52,4 @@ class JournalRecentEntries(generics.ListAPIView):
     def get_queryset(self):
         user = self.request.user
         return JournalEntry.objects.filter(user=user).order_by("-created_at")[:3]
+    
